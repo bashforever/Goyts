@@ -1,7 +1,0 @@
-{
-        "basedir": "/home/myself/Skripts/Goyts",
-        "port":1234,
-        "videodir": "/mnt/Recordings/Youtube/",
-        "options": "%(title)s",
-        "videoformat": "bestvideo[height<=1080]+bestaudio/best[height<=1080]"
-}
