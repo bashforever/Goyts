@@ -12,8 +12,8 @@ Goyts allows for a json based configuration where you can specify:
 Goyts is open source.
 
 # Configuration
-
 create a plain text file config.json with the following content (and adapt to your needs):
+
 ---
 {
         "basedir": "/home/myself/Skripts/Goyts",
