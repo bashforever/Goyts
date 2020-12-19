@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bufio"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
@@ -68,7 +69,7 @@ func urlHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "URL = %s\n", url)
 	log.Println("Fetching URL " + url)
 	log.Println("Using options " + config.Options)
-	log.Println("Target Dir" + config.Videodir)
+	log.Println("Target Dir " + config.Videodir)
 	optionstring := "-o" + config.Videodir + config.Options
 	//optionstring := "-o" + config.Options
 	log.Println("Full optionstring " + optionstring)
@@ -77,32 +78,31 @@ func urlHandler(w http.ResponseWriter, r *http.Request) {
 	formatoptions := "-f" + config.Videoformat
 
 	// now get video using os-call
-	//_, err := exec.Command("youtube-dl", optionstring, ytoptionf, ytoptions, url).Output()
-	//_, err := exec.Command("youtube-dl", url).Output()
 	cmd := exec.Command("youtube-dl", optionstring, formatoptions, url)
 	// starting download concurrent
+	stderr, _ := cmd.StderrPipe()
 	err := cmd.Start()
+
+	// 20201219 catching stderr to logfile
+	scanner := bufio.NewScanner(stderr)
+	scanner.Split(bufio.ScanWords)
+	logentry := ""
+	for scanner.Scan() {
+		logentry += scanner.Text()
+		logentry += " "
+	}
+	log.Println(logentry)
+	// EOC
 
 	if err != nil {
 		log.Printf("Error! %v", err)
 	}
-	log.Println("Download finished")
-
-	// now move video(s) to videodir
-	/*
-		optionstring = "mp4 " + config.Videodir
-		log.Println("Optionstring  for move: " + optionstring)
-		_, err2 := exec.Command("mv", optionstring).Output()
-		if err2 != nil {
-			log.Printf("Error! %v", err2)
-		}
-		log.Println("Move videos finished")
-		fmt.Fprintf(w, "Move videos finished")
-	*/
+	log.Println("Handling URL/Entry finished")
 
 }
 
 func readconfig() {
+	// read configuration from "config.json"
 	log.Println("started reading config")
 	file, err := ioutil.ReadFile("config.json")
 	if err != nil {
@@ -119,7 +119,7 @@ func readconfig() {
 	log.Println("Port: ", config.Port)
 	log.Println("Videodir: ", config.Videodir)
 	log.Println("Options: ", config.Options)
-	log.Println("Videoformat:", config.Videoformat)
+	log.Println("Videoformat: ", config.Videoformat)
 
 	log.Println("config reading OK")
 
