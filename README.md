@@ -10,3 +10,16 @@ Goyts allows for a json based configuration where you can specify:
 * youtube options for e.g specifying a max. video resolution (otherwise youtube-dl will try to get maximum resolution)
 
 Goyts is open source.
+
+# Configuration
+
+create a plain text file config.json with the following content (and adapt to your needs):
+---
+{
+        "basedir": "/home/myself/Skripts/Goyts",
+        "port":1234,
+        "videodir": "/mnt/Recordings/Youtube/",
+        "options": "%(title)s",
+        "videoformat": "bestvideo[height<=1080]+bestaudio/best[height<=1080]"
+}
+---
