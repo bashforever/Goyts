@@ -13,11 +13,14 @@ Goyts is open source.
 
 # Installation
 
-There is none: simply clone goyts to where you want it to reside. 
+There is none: simply clone these files containing goyts to where you want it to reside using git clone.
+
 But you have to build an executable for your platform:
 * install go language
 * run 'go build'
 ** executable should be built
+
+The executable is self contained! So you can build the exe on one platform (eg. x86) and the run it on all your x86 machines without any runtime environment needed (one of the advantages of the go language).
 
 # Configuration
 create a plain text file config.json based on the example.
