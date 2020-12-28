@@ -11,15 +11,23 @@ Goyts allows for a json based configuration where you can specify:
 
 Goyts is open source.
 
-# Configuration
-create a plain text file config.json with the following content (and adapt to your needs):
+# Installation
 
----
-{
-        "basedir": "/home/myself/Skripts/Goyts",
-        "port":1234,
-        "videodir": "/mnt/Recordings/Youtube/",
-        "options": "%(title)s",
-        "videoformat": "bestvideo[height<=1080]+bestaudio/best[height<=1080]"
-}
----
+There is none: simply clone goyts to where you want it to reside. 
+But you have to build an executable for your platform:
+* install go language
+* run 'go build'
+** executable should be built
+
+# Configuration
+create a plain text file config.json based on the example.
+
+# Running goyts
+
+on bash run: 'nohup Goyts &' to run and detach it from your current process.
+
+# test ist and use it
+
+Have a look at the logfile. Goyts does not record successful youtube-dl-executions, but it catches stderr-output of youtube-dl to the logfile.
+
+# have fun!
